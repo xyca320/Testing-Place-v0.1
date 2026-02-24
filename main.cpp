@@ -8,11 +8,14 @@ using namespace std;
 int main() {
     InitWindow(1280, 720, "Testing v0.1");
     SetTargetFPS(60);
+    InitAudioDevice();
 
     int PlayerX = GetScreenWidth() / 2, PlayerY = GetScreenHeight() / 2;
-    bool IsTouchingBorder = false;
+    bool IsTouchingBorder = false, IsWalking = false;
 
     Color SKIN = { 255, 224, 189, 255 };
+
+    Sound Walking = LoadSound("assets/SFX/Walking.mp3");
 
     Texture2D Wall = LoadTexture("assets/texture/Wall.jpg");
     vector<vector<int>> Map = {
@@ -35,16 +38,34 @@ int main() {
 
     while(!WindowShouldClose()) {
 
-        if (IsKeyDown(KEY_W) && !IsTouchingBorder) PlayerY -= 2;
-        if (IsKeyDown(KEY_A) && !IsTouchingBorder) PlayerX -= 2;
-        if (IsKeyDown(KEY_S) && !IsTouchingBorder) PlayerY += 2;
-        if (IsKeyDown(KEY_D) && !IsTouchingBorder) PlayerX += 2;
+        if (IsKeyDown(KEY_W) && !IsTouchingBorder) {
+            PlayerY -= 2;
+            IsWalking = true;
+        }
+        if (IsKeyDown(KEY_A) && !IsTouchingBorder) {
+            PlayerX -= 2;
+            IsWalking = true;
+        } 
+        if (IsKeyDown(KEY_S) && !IsTouchingBorder) {
+            PlayerY += 2;
+            IsWalking = true;
+        } 
+        if (IsKeyDown(KEY_D) && !IsTouchingBorder) {
+            PlayerX += 2;
+            IsWalking = true;
+        } 
 
         if (IsKeyDown(KEY_LEFT_SHIFT) && !IsTouchingBorder) {
             if (IsKeyDown(KEY_W) && !IsTouchingBorder) PlayerY -= 5;
             if (IsKeyDown(KEY_A) && !IsTouchingBorder) PlayerX -= 5;
             if (IsKeyDown(KEY_S) && !IsTouchingBorder) PlayerY += 5;
             if (IsKeyDown(KEY_D) && !IsTouchingBorder) PlayerX += 5;
+        }
+
+        if (IsWalking) {
+            PlaySound(Walking);
+        } else {
+            StopSound(Walking);
         }
 
         BeginDrawing();
