@@ -56,7 +56,6 @@ Rectangle MakeChoiceRow(int row) {
 int main() {
     InitWindow(Width, Height, "Testing v0.1");
     SetExitKey(KEY_NULL);
-    SetTargetFPS(FPS);
     InitAudioDevice();
 
     int PlayerX = GetScreenWidth() / 2 - 80, PlayerY = GetScreenHeight() / 2;
@@ -179,6 +178,8 @@ int main() {
 
     while (!WindowShouldClose()) {
         Vector2 MousePos = GetMousePosition();
+        
+        SetTargetFPS(FPS);
 
         bool IsWalking = false;  // RESET
 
@@ -234,8 +235,117 @@ int main() {
                     ToggleFullscreen();
                 }
             }
+            if (CheckCollisionPointRec(MousePos, FPSButton)) {
+                ClickedFPS = true;
+                ClickedWindowMode = false;
+                ClickedColor = false;
+                ClickedResolution = false;
+            } else if (CheckCollisionPointRec(MousePos, Choices1)) {
+                FPS = 30;
+            } else if (CheckCollisionPointRec(MousePos, Choices2)) {
+                FPS = 60;
+            } else if (CheckCollisionPointRec(MousePos, Choices3)) {
+                FPS = 75;
+            } else if (CheckCollisionPointRec(MousePos, Choices4)) {
+                FPS = 120;
+            } else if (CheckCollisionPointRec(MousePos, Choices5)) {
+                FPS = 144;
+            } else if (CheckCollisionPointRec(MousePos, Choices6)) {
+                FPS = 165;
+            } else if (CheckCollisionPointRec(MousePos, Choices7)  /*67676767676767676767676767676767676767676767*/) {
+                FPS = 180;
+            } else if (CheckCollisionPointRec(MousePos, Choices8)) {
+                FPS = 200;
+            } else if (CheckCollisionPointRec(MousePos, Choices9)) {
+                FPS = 240;
+            } else if (CheckCollisionPointRec(MousePos, Choices10)) {
+                FPS = 300;
+            } else if (CheckCollisionPointRec(MousePos, Choices11)) {
+                FPS = 360;
+            } else if (CheckCollisionPointRec(MousePos, Choices12)) {
+                FPS = 520;
+            } else if (CheckCollisionPointRec(MousePos, Choices13)) {
+                FPS = 600;
+            } else if (CheckCollisionPointRec(MousePos, Choices14)) {
+                FPS = 720;
+            }
+            if (CheckCollisionPointRec(MousePos, ResButton)) {
+                ClickedResolution = true;
+                ClickedWindowMode = false;
+                ClickedColor = false;
+                ClickedFPS = false;
+            } else if (CheckCollisionPointRec(MousePos, Choices1)) {
+                Width = 620;
+                Height = 480;
+                CloseWindow();
+                InitWindow(Width, Height, "Testing v0.1");
+            } else if (CheckCollisionPointRec(MousePos, Choices2)) {
+                Width = 1280;
+                Height = 720;
+                CloseWindow();
+                InitWindow(Width, Height, "Testing v0.1");
+            } else if (CheckCollisionPointRec(MousePos, Choices3)) {
+                Width = 1366;
+                Height = 768;
+                CloseWindow();
+                InitWindow(Width, Height, "Testing v0.1");
+            } else if (CheckCollisionPointRec(MousePos, Choices4)) {
+                Width = 1600;
+                Height = 900;
+                CloseWindow();
+                InitWindow(Width, Height, "Testing v0.1");
+            } else if (CheckCollisionPointRec(MousePos, Choices5)) {
+                Width = 1920;
+                Height = 1080;
+                CloseWindow();
+                InitWindow(Width, Height, "Testing v0.1");InitWindow(Width, Height, "Testing v0.1");
+            } else if (CheckCollisionPointRec(MousePos, Choices6)) {
+                Width = 2560;
+                Height = 1080;
+                CloseWindow();
+                InitWindow(Width, Height, "Testing v0.1");
+            } else if (CheckCollisionPointRec(MousePos, Choices7)  /*67676767676767676767676767676767676767676767*/) {
+                Width = 2560;
+                Height = 1440;
+                CloseWindow();
+                InitWindow(Width, Height, "Testing v0.1");
+            } else if (CheckCollisionPointRec(MousePos, Choices8)) {
+                Width = 2560;
+                Height = 1600;
+                CloseWindow();
+                InitWindow(Width, Height, "Testing v0.1");
+            } else if (CheckCollisionPointRec(MousePos, Choices9)) {
+                Width = 3440;
+                Height = 1440;
+                CloseWindow();
+                InitWindow(Width, Height, "Testing v0.1");
+            } else if (CheckCollisionPointRec(MousePos, Choices10)) {
+                Width = 2880;
+                Height = 1620;
+                CloseWindow();
+                InitWindow(Width, Height, "Testing v0.1");InitWindow(Width, Height, "Testing v0.1");
+            } else if (CheckCollisionPointRec(MousePos, Choices11)) {
+                Width = 3200;
+                Height = 1800;
+                CloseWindow();
+                InitWindow(Width, Height, "Testing v0.1");InitWindow(Width, Height, "Testing v0.1");
+            } else if (CheckCollisionPointRec(MousePos, Choices12)) {
+                Width = 3456;
+                Height = 2160;
+                CloseWindow();
+                InitWindow(Width, Height, "Testing v0.1");
+            } else if (CheckCollisionPointRec(MousePos, Choices13)) {
+                Width = 2840;
+                Height = 2160;
+                CloseWindow();
+                InitWindow(Width, Height, "Testing v0.1");
+            } else if (CheckCollisionPointRec(MousePos, Choices14)) {
+                Width = 7680;
+                Height = 4320;
+                CloseWindow();
+                InitWindow(Width, Height, "Testing v0.1");
+            }
         }
-
 
         if (InGame && IsKeyPressed(KEY_ESCAPE)) {
             InGame = false;
@@ -321,10 +431,6 @@ int main() {
                 DrawRectangle(0, 0, 640, 45, LIGHTGRAY);
                 DrawText("Do you want to reset? (Y - yes   N - no)", 5, 8.5f, 30, RED);
             }
-            if (IsTryingToFullScreen) {
-                DrawRectangle(0, 0, 1000, 45, LIGHTGRAY);
-                DrawText("Which Windowed Mode would you like? (F - FullScreen  B - Borderless  N - Nevermind)", 5, 9.5f, 23, RED);
-            }
         } else if (InMenu) {
             ClearBackground(WHITE);
 
@@ -353,6 +459,35 @@ int main() {
                 DrawButton(Choices1, "Borderless Windowed", MousePos, 30);
                 DrawButton(Choices2, "Full Screen", MousePos, 30);
                 DrawButton(Choices3, "Windowed", MousePos, 30);
+            } else if (ClickedFPS) {
+                DrawButton(Choices1, "30 FPS", MousePos, 30);
+                DrawButton(Choices2, "60 FPS", MousePos, 30);
+                DrawButton(Choices3, "75 FPS", MousePos, 30);
+                DrawButton(Choices4, "120 FPS", MousePos, 30);
+                DrawButton(Choices5, "144 FPS", MousePos, 30);
+                DrawButton(Choices6, "165 FPS", MousePos, 30);
+                DrawButton(Choices7, "180 FPS", MousePos, 30);
+                DrawButton(Choices8, "240 FPS", MousePos, 30);
+                DrawButton(Choices9, "300 FPS", MousePos, 30);
+                DrawButton(Choices10, "360 FPS", MousePos, 30);
+                DrawButton(Choices11, "520 FPS", MousePos, 30);
+                DrawButton(Choices12, "600 FPS", MousePos, 30);
+                DrawButton(Choices13, "720 FPS", MousePos, 30);
+            } else if (ClickedResolution) {
+                DrawButton(Choices1, "640 x 480p", MousePos, 30);
+                DrawButton(Choices2, "1280 x 720p", MousePos, 30);
+                DrawButton(Choices3, "1366 x 768p", MousePos, 30);
+                DrawButton(Choices4, "1600 x 900p", MousePos, 30);
+                DrawButton(Choices5, "1920 x 1080p", MousePos, 30);
+                DrawButton(Choices6, "2560 x 1080p", MousePos, 30);
+                DrawButton(Choices7, "2560 x 1440p", MousePos, 30);
+                DrawButton(Choices8, "2560 x 1600p", MousePos, 30);
+                DrawButton(Choices9, "3440 x 1440p", MousePos, 30);
+                DrawButton(Choices10, "2880 x 1620p", MousePos, 30);
+                DrawButton(Choices11, "3200 x 1800p", MousePos, 30);
+                DrawButton(Choices12, "3456 x 2160p", MousePos, 30);
+                DrawButton(Choices13, "3840 x 2160p", MousePos, 30);
+                DrawButton(Choices14, "7680 x 4320p", MousePos, 30);
             }
         }
 
